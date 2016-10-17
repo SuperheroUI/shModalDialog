@@ -1,0 +1,82 @@
+@import '../node_modules/sh-core/src/base';
+
+.sh-modal-dialog {
+    color: $color-box-background;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: $color-box-dark-background1;
+    display: none;
+    transition: opacity $transition;
+    opacity: 0;
+
+    &.fade-in {
+        opacity: 1;
+        transition: opacity $transition;
+    }
+
+    &.display-modal {
+        display: block;
+        z-index: 10000000;
+    }
+
+    .sh-modal-content {
+        position: absolute;
+        left: calc(50% - 400px);
+        right: calc(50% - 400px);
+        top: calc(50% - 400px);
+        bottom: calc(50% - 400px);
+        background-color: $color-thirdary;
+        border-radius: 4px;
+        padding: 40px 50px;
+
+        .sh-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 20px;
+            color: $color-box-background3;
+            cursor: pointer;
+        }
+
+        .sh-modal-title {
+            line-height: 1.1;
+            color: $color-font;
+            font-size: 45px;
+            font-family: $font-family-condensed;
+            @include ellipsis;
+        }
+
+        .sh-dynamic-content {
+            position: absolute;
+            left: 50px;
+            right: 50px;
+            top: 115px;
+            bottom: 100px;
+            overflow-y: auto;
+            color: $color-box-background3;
+        }
+
+        .sh-button-divider {
+            position: absolute;
+            bottom: 100px;
+            width: 100%;
+            border-top: 1px solid $colorBackground;
+            left: 0;
+        }
+
+        .sh-button-group {
+            position: absolute;
+            right: 70px;
+            bottom: 30px;
+
+            .sh-cancel {
+                margin-right: 20px;
+                background-color: rgba(0, 0, 0, 0);
+                color: $color-primary;
+            }
+        }
+    }
+}
