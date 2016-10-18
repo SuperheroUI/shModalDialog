@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import ShCore from 'sh-core';
+import * as _ from 'lodash';
 import './sh-modal-dialog.scss';
 
 class ShModalDialog extends Component {
@@ -48,13 +49,16 @@ class ShModalDialog extends Component {
     }
 
     componentDidMount() {
-        this.setState({
-            child: React.cloneElement(this.props.children, {returnData: {}})
-        })
+        console.log(this.props.children)
+        if (this.props.children && _.isFunction(this.props.children.type)) {
+            this.setState({
+                child: React.cloneElement(this.props.children, {returnData: {}})
+            })
+        }
     }
 
     setData(returnData) {
-        if (returnData) {
+        if (returnData && (this.state.child != null) && this.props.shReturnData) {
             this.props.shReturnData(this.state.child.props.returnData)
         }
     }
