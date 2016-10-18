@@ -50,7 +50,11 @@ module.exports = {
             {
                 test: /\.s?css$/,
                 loaders: ['style', 'css', 'sass']
-            }
+            },
+            {
+                test: /\.(ttf|eot|svg|woff)$/,
+                loader: "url-loader"
+            },
         ]
     }
 };

@@ -17,8 +17,10 @@ class ModalContent extends Component {
     render() {
         return (
             <div className="bc-editor">
+                <i className="sh-icon icon-x"/>
                 <button onClick={this.setValues}>Set Values</button>
                 <button onClick={this.props.closeMe}>Call Close</button>
+                <button onClick={this.props.restCall}>Make Rest</button>
                 Content for the modal Dialog
             </div>
         )
