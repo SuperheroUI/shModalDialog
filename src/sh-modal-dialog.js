@@ -7,7 +7,6 @@ class ShModalDialog extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            child: null,
             classList: {
                 displayModal: false,
                 fadeIn: false,
@@ -16,19 +15,8 @@ class ShModalDialog extends Component {
         };
 
         this.showModal = this.showModal.bind(this);
-        this.hideModal = this.hideModal.bind(this);
-        this.setData = this.setData.bind(this);
-    }
-
-    componentWillReceiveProps(props) {
-        if ((this.state.classList.displayModal === false) && (props.shShowModal)) {
-            this.props.shResetModal();
-            this.showModal();
-        }
-
-        if ((this.state.classList.displayModal === true) && (props.shHideModal)) {
-            this.hideModal()();
-        }
+        this.handleSuccess = this.handleSuccess.bind(this);
+        this.handleCancel = this.handleCancel.bind(this);
     }
 
     showModal() {
@@ -49,60 +37,47 @@ class ShModalDialog extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props.children)
-        if (this.props.children && _.isFunction(this.props.children.type)) {
-            this.setState({
-                child: React.cloneElement(this.props.children, {returnData: {}})
-            })
+        if ((this.state.classList.displayModal === false)) {
+            this.showModal();
         }
     }
 
-    setData(returnData) {
-        if (returnData && (this.state.child != null) && this.props.shReturnData) {
-            this.props.shReturnData(this.state.child.props.returnData)
+    handleSuccess() {
+        if (this.props.shSuccess) {
+            this.props.shSuccess()
         }
     }
 
-    hideModal(returnData) {
-        return ()=> {
-            this.setState({
-                classList: {
-                    fadeIn: false,
-                    displayModal: true
-                }
-            }, ()=> {
-                setTimeout(()=> {
-                    this.setState({
-                        classList: {
-                            displayModal: false,
-                            fadeIn: false
-                        }
-                    }, this.setData(returnData))
-                }, 1000)
-            })
+    handleCancel() {
+        if (this.props.shCancel) {
+            this.props.shCancel()
         }
     }
 
     getSaveButton() {
-        if (this.props.shSaveButton) {
-            return this.props.shSaveButton
+        if (!this.props.shModalSaveButton || _.isString(this.props.shModalSaveButton)) {
+            const buttonText = this.props.shModalSaveButton || 'Save';
+            return <button className="sh-btn sh-btn-primary" onClick={this.handleSuccess}>{buttonText}</button>
+
         } else {
-            return <button className="sh-btn sh-btn-primary" onClick={this.hideModal(true)}>Save</button>
+            return this.props.shSaveButton
         }
     }
 
     render() {
         return (
-            <div className={'sh-modal-dialog ' + ShCore.getClassNames(this.state.classList)}>
+            <div className={'sh-modal-dialog ' + ShCore.getClassNames(this.state.classList)} id="sh-modal">
                 <div className="sh-modal-content ">
-                    <i className="sh-icon icon-x sh-close" onClick={this.hideModal()}/>
+                    <i className="sh-icon icon-x sh-close" onClick={this.handleCancel}/>
                     <div className="sh-modal-title">{this.props.shModalTitle}</div>
                     <div className="sh-dynamic-content">
-                        {this.state.child}
+                        {this.props.children}
                     </div>
                     <div className="sh-button-divider"/>
                     <div className="sh-button-group">
-                        <button className="sh-btn sh-btn-default sh-cancel" onClick={this.hideModal()}>Cancel</button>
+                        <button className="sh-btn sh-btn-default sh-cancel" onClick={this.handleCancel}>
+                            Cancel
+                        </button>
                         {this.getSaveButton()}
                     </div>
                 </div>
@@ -112,10 +87,10 @@ class ShModalDialog extends Component {
 }
 
 ShModalDialog.propTypes = {
-    shSaveButton: React.PropTypes.any,
-    shShowModal: React.PropTypes.bool,
-    shHideModal: React.PropTypes.bool,
-    shResetModal: React.PropTypes.func.isRequired
+    shModalTitle: React.PropTypes.string,
+    shModalSaveButton: React.PropTypes.any,
+    shSuccess: React.PropTypes.func,
+    shCancel: React.PropTypes.func,
 };
 
 export default ShModalDialog;

@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ShModalDialog from './sh-modal-as-service';
+import ShModalDialog from './sh-modal-dialog';
 
 const rootElement = document.createElement('div');
 rootElement.classList.add('sh-modal-Dialog-wrapper');

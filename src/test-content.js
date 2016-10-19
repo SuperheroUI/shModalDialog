@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-class ModalContent extends Component {
+class TestContent extends Component {
     constructor(props) {
         super(props);
         this.state = {};
@@ -8,11 +8,11 @@ class ModalContent extends Component {
 
     render() {
         return (
-            <div className="bc-editor">
-                Content for the modal Dialog
+            <div className="test-content">
+                test content
             </div>
         )
     }
 }
 
-export default ModalContent;
+export default TestContent;

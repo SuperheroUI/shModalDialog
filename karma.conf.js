@@ -6,7 +6,10 @@ module.exports = function(config) {
     browsers: [ 'PhantomJS' ],
     singleRun: true,
     frameworks: [ 'jasmine' ],
-    files: [ 'src/**/*.spec.js' ],
+    files: [
+      'node_modules/babel-polyfill/dist/polyfill.js',
+      'src/**/*.spec.js'
+    ],
     preprocessors: {
       'src/**/*.spec.js': ['webpack']
     },
