@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
+import React from 'react';
 import ShCore from 'sh-core';
 import * as _ from 'lodash';
 import './sh-modal-dialog.scss';
 
-class ShModalDialog extends Component {
+class ShModalDialog extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -56,7 +56,11 @@ class ShModalDialog extends Component {
 
     getSaveButton() {
         if (!this.props.shModalSaveButton || _.isString(this.props.shModalSaveButton)) {
-            const buttonText = this.props.shModalSaveButton || 'Save';
+            let buttonText = this.props.shModalSaveButton;
+            if (!buttonText) {
+                buttonText = 'Save';
+            }
+
             return <button className="sh-btn sh-btn-primary" onClick={this.handleSuccess}>{buttonText}</button>
 
         } else {
@@ -68,16 +72,14 @@ class ShModalDialog extends Component {
         return (
             <div className={'sh-modal-dialog ' + ShCore.getClassNames(this.state.classList)} id="sh-modal">
                 <div className="sh-modal-content ">
-                    <i className="sh-icon icon-x sh-close" onClick={this.handleCancel}/>
+                    <i className="sh-icon icon-x sh-close" onClick={this.handleCancel} />
                     <div className="sh-modal-title">{this.props.shModalTitle}</div>
                     <div className="sh-dynamic-content">
                         {this.props.children}
                     </div>
-                    <div className="sh-button-divider"/>
+                    <div className="sh-button-divider" />
                     <div className="sh-button-group">
-                        <button className="sh-btn sh-btn-default sh-cancel" onClick={this.handleCancel}>
-                            Cancel
-                        </button>
+                        <button className="sh-btn sh-btn-default sh-cancel" onClick={this.handleCancel}>Cancel</button>
                         {this.getSaveButton()}
                     </div>
                 </div>

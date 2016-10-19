@@ -1,43 +1,76 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var TestUtils = require('react/lib/ReactTestUtils');
-var ModelContent = require('./test-content');
+import React from 'react';
 import * as _ from 'lodash';
 
-var Modal = require('./sh-modal-service').default;
+import ModalContent from './test-content';
+import Modal from './sh-modal-service';
+
+import TestUtils from 'react/lib/ReactTestUtils';
 
 describe('root', function () {
+    beforeEach(function() {
+        jasmine.clock().install();
+    });
+
+    afterEach(function() {
+        jasmine.clock().uninstall();
+    });
+
     it('renders without problems, returns a promise', function () {
-        const dialog = new Modal(<ModelContent />, 'Service Modal', 'OK');
+        const dialog = new Modal(<ModalContent />, 'Service Modal', 'OK');
         let promise = dialog.open();
+        jasmine.clock().tick(5000);
         expect(promise.then).toBeTruthy();
         promise.catch(_.noop);
+        dialog.close();
+        jasmine.clock().tick(5000);
     });
 
     it('should fade out before closing', function (done) {
-        const dialog = new Modal(<ModelContent />, 'Service Modal', 'OK');
-        let promise = dialog.open();
-        promise.then(() => {
-            console.log('in promise');
+        const dialog = new Modal(<ModalContent />, 'Service Modal', 'OK');
+        dialog.open().then(() => {
+            jasmine.clock().tick(5000);
             expect(document.getElementById('sh-modal').classList).toContain('fade-in');
-            log = document.getElementById('sh-modal').classList+ '-------------hi'
             dialog.fadeOut();
-            expect(document.getElementById('sh-modal').classList).not.toContain('fade-in')
-            console.log(log+'in promise')
-            done()
+            expect(document.getElementById('sh-modal').classList).not.toContain('fade-in');
+            done();
         }).catch((error)=>{
-            console.log('error', error);
+            fail(error);
             done();
         });
 
-        dialog.resolve();
+        const btnSuccess = document.getElementsByClassName('sh-btn-primary')[0];
+        TestUtils.Simulate.click(btnSuccess);
     });
 
-    it('should remove the component', function () {
-        const dialog = new  Modal(<ModelContent />, 'Service Modal', 'OK');
+    it('should fade out before closing when canceled', function (done) {
+        const dialog = new Modal(<ModalContent />, 'Service Modal', 'OK');
+        dialog.open().then(() => {
+            fail('Cancel was pressed, this should run through error code.');
+            done();
+        }).catch(()=>{
+            // We will be hitting this code, which does not have a 'fail' in it.
+            done();
+        });
+
+        const btnCancel = document.getElementsByClassName('sh-btn-default')[0];
+        TestUtils.Simulate.click(btnCancel);
+    });
+
+    it('should remove the component', function (done) {
+        const dialog = new  Modal(<ModalContent />, 'Service Modal', 'OK');
         dialog.open().then(() => {
             dialog.close();
+            jasmine.clock().tick(5000);
             expect(document.getElementById('sh-modal')).toBeFalsy();
-        }).catch(_.noop);
+            done();
+        }).catch((error) => {
+            fail(error);
+            dialog.close();
+            jasmine.clock().tick(5000);
+            done();
+        });
+
+        const btnSuccess = document.getElementsByClassName('sh-btn-primary')[0];
+        TestUtils.Simulate.click(btnSuccess);
     });
 });
