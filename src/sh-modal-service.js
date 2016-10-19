@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ShModalDialog from './sh-modal-dialog';
-import * as _ from 'lodash';
 
 const rootElement = document.createElement('div');
 rootElement.classList.add('sh-modal-Dialog-wrapper');
@@ -16,14 +15,12 @@ class ShModalService {
 
     open() {
         return new Promise((resolve, reject) => {
-            this.resolve = resolve;
-
             const cancel = () => {
                 this.close();
                 reject();
             };
 
-            ReactDOM.render(<ShModalDialog shModalTitle={this.title} shModalSaveButton={this.saveButton} shSuccess={this.resolve} shCancel={cancel}>{this.contentElement}</ShModalDialog>, rootElement);
+            ReactDOM.render(<ShModalDialog shModalTitle={this.title} shModalSaveButton={this.saveButton} shSuccess={resolve} shCancel={cancel}>{this.contentElement}</ShModalDialog>, rootElement);
         });
     }
 
