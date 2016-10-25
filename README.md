@@ -14,6 +14,6 @@ npm install sh-modal-dialog --save
 
 Now you can import it into your project
 ```js
-import ShModalDialog from 'sh-modal-dialog';
+import ShModalDialog from 'sh-modal-service';
 ```
 

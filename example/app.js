@@ -28,9 +28,9 @@ class App extends React.Component {
         const test = ()=> {
             return new Promise((r, err)=> {
                 setTimeout(()=> {
-                    console.log('return data')
+                    console.log('return data');
                     r();
-                }, 3000)
+                }, 1000)
             });
         };
 
