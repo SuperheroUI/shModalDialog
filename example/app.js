@@ -1,6 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom';
-import ShModalDialog from '../bin/sh-modal-dialog';
 import ModalContent from './modal-content'
 import ShDialog from '../src/sh-modal-service'
 import '../node_modules/sh-core/bin/main.css';

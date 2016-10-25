@@ -2,7 +2,7 @@ var path = require('path');
 
 module.exports = {
     entry: {
-        'sh-modal-dialog': './src/sh-modal-dialog.js',
+        'sh-modal-service': './src/sh-modal-service.js',
     },
     output: {
         path: './bin',
