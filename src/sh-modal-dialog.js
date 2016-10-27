@@ -64,7 +64,7 @@ class ShModalDialog extends React.Component {
             return <button className="sh-btn sh-btn-primary" onClick={this.handleSuccess}>{buttonText}</button>
 
         } else {
-            return this.props.shSaveButton
+            return this.props.shModalSaveButton
         }
     }
 
