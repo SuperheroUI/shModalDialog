@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import * as _ from 'lodash';
 
 import ModalContent from './test-content';
@@ -73,4 +74,45 @@ describe('root', function () {
         const btnSuccess = document.getElementsByClassName('sh-btn-primary')[0];
         TestUtils.Simulate.click(btnSuccess);
     });
+
+    it('set valid should validate the modal', function (done) {
+        const dialog = new Modal(<ModalContent />, 'Service Modal', 'OK');
+        dialog.open().then(() => {
+            jasmine.clock().tick(5000);
+            expect(document.getElementById('sh-modal').classList).not.toContain('sh-valid');
+            dialog.setValid();
+            expect(document.getElementById('sh-modal').classList).toContain('sh-valid');
+            dialog.close();
+            jasmine.clock().tick(5000);
+            done();
+        }).catch((error)=>{
+            fail(error);
+            done();
+        });
+
+        const btnSuccess = document.getElementsByClassName('sh-btn-primary')[0];
+        TestUtils.Simulate.click(btnSuccess);
+    });
+    it('remove valid should invalidate the dialog', function (done) {
+        const dialog = new Modal(<ModalContent />, 'Service Modal', 'OK');
+        dialog.open().then(() => {
+            jasmine.clock().tick(5000);
+            expect(document.getElementById('sh-modal').classList).not.toContain('sh-valid');
+            dialog.setValid();
+            expect(document.getElementById('sh-modal').classList).toContain('sh-valid');
+            dialog.removeValid();
+            expect(document.getElementById('sh-modal').classList).not.toContain('sh-valid');
+            dialog.close();
+            jasmine.clock().tick(5000);
+            done();
+        }).catch((error)=>{
+            fail(error);
+            done();
+        });
+
+        const btnSuccess = document.getElementsByClassName('sh-btn-primary')[0];
+        TestUtils.Simulate.click(btnSuccess);
+    });
+
+
 });
