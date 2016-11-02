@@ -15,6 +15,19 @@
             padding: 20px;
             background: linear-gradient(#284D51, #304853) fixed !important;
         }
+
+        .sh-modal-dialog.sh-valid .sh-button-group .sh-btn.sh-btn-primary {
+            opacity: 1;
+            transition: opacity .5s;
+
+        }
+
+        .sh-modal-dialog:not(.sh-valid) .sh-button-group .sh-btn.sh-btn-primary {
+            transition: opacity .5s;
+            cursor: not-allowed;
+            opacity: .4;
+        }
+
     </style>
 </head>
 <body>

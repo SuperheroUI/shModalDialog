@@ -20,7 +20,7 @@ class ShModalService {
                 reject();
             };
 
-            ReactDOM.render(<ShModalDialog shModalTitle={this.title} shModalSaveButton={this.saveButton} shSuccess={resolve} shCancel={cancel}>{this.contentElement}</ShModalDialog>, rootElement);
+            ReactDOM.render(<ShModalDialog callBackFunction shModalTitle={this.title} shModalSaveButton={this.saveButton} shSuccess={resolve} shCancel={cancel}>{this.contentElement}</ShModalDialog>, rootElement);
         });
     }
 
@@ -33,6 +33,14 @@ class ShModalService {
 
     fadeOut(){
         document.getElementById('sh-modal').classList.remove('fade-in');
+    }
+
+    setValid(){
+        document.getElementById('sh-modal').classList.add('sh-valid');
+    }
+
+    removeValid(){
+        document.getElementById('sh-modal').classList.remove('sh-valid');
     }
 }
 
