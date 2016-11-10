@@ -7,11 +7,12 @@ rootElement.classList.add('sh-modal-Dialog-wrapper');
 document.body.appendChild(rootElement);
 
 class ShModalService {
-    constructor(contentElement, title, saveButton, cssClass) {
+    constructor(contentElement, title, saveButton, cssClass, forceValid) {
         this.contentElement = contentElement;
         this.title = title;
         this.saveButton = saveButton;
         this.cssClass = cssClass || '';
+        this.forceValid = forceValid;
     }
 
     open() {
@@ -21,7 +22,7 @@ class ShModalService {
                 reject();
             };
 
-            ReactDOM.render(<ShModalDialog callBackFunction shModalTitle={this.title} shModalSaveButton={this.saveButton} shSuccess={resolve} shCancel={cancel} shClass={this.cssClass}>{this.contentElement}</ShModalDialog>, rootElement);
+            ReactDOM.render(<ShModalDialog callBackFunction shModalTitle={this.title} shForceValid={this.forceValid} shModalSaveButton={this.saveButton} shSuccess={resolve} shCancel={cancel} shClass={this.cssClass}>{this.contentElement}</ShModalDialog>, rootElement);
         });
     }
 

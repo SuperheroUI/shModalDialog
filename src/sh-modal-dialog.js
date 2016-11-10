@@ -11,6 +11,7 @@ class ShModalDialog extends React.Component {
                 displayModal: false,
                 fadeIn: false,
                 firstRun: true,
+                shValid: true
             }
         };
 
@@ -19,25 +20,27 @@ class ShModalDialog extends React.Component {
         this.handleCancel = this.handleCancel.bind(this);
     }
 
-    showModal() {
+    showModal(props) {
         this.setState({
             classList: {
                 displayModal: true
             }
         }, ()=> {
             setTimeout(()=> {
+                let classList = {};
+                classList.displayModal=true;
+                classList.fadeIn = true;
+                classList.shValid = props.shForceValid;
+
                 this.setState({
-                    classList: {
-                        displayModal: true,
-                        fadeIn: true
-                    }
+                    classList: classList
                 })
             }, 100)
         })
     }
 
     componentDidMount() {
-        this.showModal();
+        this.showModal(this.props);
     }
 
     handleSuccess() {
