@@ -33,7 +33,7 @@ class App extends React.Component {
     componentDidMount() {
         this.setState({
             modalDialog: new ShDialog(<ModalContent
-                onClick={this.validateBattleCard}/>, 'Create Battle Card', this.getButton())
+                onClick={this.validateBattleCard}/>, 'Create Battle Card', this.getButton(), 'sh-small')
         })
     }
 

@@ -8,11 +8,11 @@ import Modal from './sh-modal-service';
 import TestUtils from 'react/lib/ReactTestUtils';
 
 describe('root', function () {
-    beforeEach(function() {
+    beforeEach(function () {
         jasmine.clock().install();
     });
 
-    afterEach(function() {
+    afterEach(function () {
         jasmine.clock().uninstall();
     });
 
@@ -34,7 +34,7 @@ describe('root', function () {
             dialog.fadeOut();
             expect(document.getElementById('sh-modal').classList).not.toContain('fade-in');
             done();
-        }).catch((error)=>{
+        }).catch((error)=> {
             fail(error);
             done();
         });
@@ -48,7 +48,7 @@ describe('root', function () {
         dialog.open().then(() => {
             fail('Cancel was pressed, this should run through error code.');
             done();
-        }).catch(()=>{
+        }).catch(()=> {
             // We will be hitting this code, which does not have a 'fail' in it.
             done();
         });
@@ -58,7 +58,7 @@ describe('root', function () {
     });
 
     it('should remove the component', function (done) {
-        const dialog = new  Modal(<ModalContent />, 'Service Modal', 'OK');
+        const dialog = new Modal(<ModalContent />, 'Service Modal', 'OK');
         dialog.open().then(() => {
             dialog.close();
             jasmine.clock().tick(5000);
@@ -85,7 +85,7 @@ describe('root', function () {
             dialog.close();
             jasmine.clock().tick(5000);
             done();
-        }).catch((error)=>{
+        }).catch((error)=> {
             fail(error);
             done();
         });
@@ -105,7 +105,7 @@ describe('root', function () {
             dialog.close();
             jasmine.clock().tick(5000);
             done();
-        }).catch((error)=>{
+        }).catch((error)=> {
             fail(error);
             done();
         });
@@ -113,6 +113,20 @@ describe('root', function () {
         const btnSuccess = document.getElementsByClassName('sh-btn-primary')[0];
         TestUtils.Simulate.click(btnSuccess);
     });
+    it('set save button to default', function (done) {
+        const dialog = new Modal(<ModalContent />, 'Service Modal');
+        dialog.open().then(() => {
+            jasmine.clock().tick(5000);
+            expect(document.getElementById('sh-save-button')).toBeTruthy();
+            dialog.close();
+            jasmine.clock().tick(5000);
+            done();
+        }).catch((error)=> {
+            fail(error);
+            done();
+        });
 
-
+        const btnSuccess = document.getElementsByClassName('sh-btn-primary')[0];
+        TestUtils.Simulate.click(btnSuccess);
+    });
 });
