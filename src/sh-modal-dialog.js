@@ -10,7 +10,7 @@ class ShModalDialog extends React.Component {
             classList: {
                 displayModal: false,
                 fadeIn: false,
-                firstRun: true
+                firstRun: true,
             }
         };
 
@@ -37,21 +37,16 @@ class ShModalDialog extends React.Component {
     }
 
     componentDidMount() {
-        if ((this.state.classList.displayModal === false)) {
-            this.showModal();
-        }
+        this.showModal();
     }
 
     handleSuccess() {
-        if (this.props.shSuccess) {
-            this.props.shSuccess()
-        }
+        this.props.shSuccess();
+
     }
 
     handleCancel() {
-        if (this.props.shCancel) {
-            this.props.shCancel()
-        }
+        this.props.shCancel();
     }
 
     getSaveButton() {
@@ -61,8 +56,8 @@ class ShModalDialog extends React.Component {
                 buttonText = 'Save';
             }
 
-            return <button className="sh-btn sh-btn-primary" onClick={this.handleSuccess}>{buttonText}</button>
-
+            return <button id="sh-save-button" className="sh-btn sh-btn-primary"
+                           onClick={this.handleSuccess}>{buttonText}</button>
         } else {
             return this.props.shModalSaveButton
         }
@@ -70,14 +65,15 @@ class ShModalDialog extends React.Component {
 
     render() {
         return (
-            <div className={'sh-modal-dialog ' + ShCore.getClassNames(this.state.classList)} id="sh-modal">
-                <div className="sh-modal-content ">
-                    <i className="sh-icon icon-x sh-close" onClick={this.handleCancel} />
+            <div className={'sh-modal-dialog ' + ShCore.getClassNames(this.state.classList)}
+                 id="sh-modal">
+                <div className={"sh-modal-content " + this.props.shClass}>
+                    <i className="sh-icon icon-x sh-close" onClick={this.handleCancel}/>
                     <div className="sh-modal-title">{this.props.shModalTitle}</div>
                     <div className="sh-dynamic-content">
                         {this.props.children}
                     </div>
-                    <div className="sh-button-divider" />
+                    <div className="sh-button-divider"/>
                     <div className="sh-button-group">
                         <button className="sh-btn sh-btn-default sh-cancel" onClick={this.handleCancel}>Cancel</button>
                         {this.getSaveButton()}
